@@ -1,9 +1,9 @@
 import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import bcrypt from 'bcryptjs';
 
-@Entity('user') // use minúsculo para evitar problemas
+@Entity('user') // Cria a entidade usuario no banco de dados.
 export class User {
-
+ //gera todas as colunas.
     @PrimaryGeneratedColumn()
     id!: number;
 
@@ -21,20 +21,20 @@ export class User {
 
     private oldPassword?: string;
 
-    constructor(name: string, email: string, password: string, userType: string) {
+    constructor(name: string, email: string, password: string, userType: string) { //constructor
         this.name = name;
         this.email = email;
         this.password = password;
         this.userType = userType;
     }
 
-    @BeforeInsert()
+    @BeforeInsert() //gera o "salt" do hash, criptografa a senha e adiciona o salt junto.
     async hashInsert() {
         const salt = await bcrypt.genSalt(10);
         this.password = await bcrypt.hash(this.password, salt);
     }
 
-    @BeforeUpdate()
+    @BeforeUpdate() //gera o salt e criptografa a senha sempre que o usuario sofrer um update.
     async hashUpdate() {
         if (this.password !== this.oldPassword) {
             const salt = await bcrypt.genSalt(10);
@@ -42,7 +42,7 @@ export class User {
         }
     }
 
-    setPreviousPassword(password: string) {
+    setPreviousPassword(password: string) { //salva a senha antiga.
         this.oldPassword = password;
     }
 }
