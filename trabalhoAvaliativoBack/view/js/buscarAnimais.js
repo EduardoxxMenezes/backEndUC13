@@ -1,5 +1,5 @@
 // pegar elementos do DOM
-const container = document.getElementById("petCardsContainer");
+const container = document.getElementById("petCardsContainer"); 
 const editPanel = document.getElementById("editPetPanel");
 const editForm = document.getElementById("editPetForm");
 const cancelEditBtn = document.getElementById("cancelEditBtn");
@@ -14,13 +14,13 @@ async function carregarPets() {
   container.innerHTML = ""; // limpa container
 
   try {
-    const res = await fetch("http://localhost:3000/api/pets");
-    if (!res.ok) throw new Error("Erro ao carregar os pets");
+    const res = await fetch("http://localhost:3000/api/pets"); //conecta com o router do pet
+    if (!res.ok) throw new Error("Erro ao carregar os pets"); // se nao conectar: ERRO.
 
-    allPets = await res.json();
+    allPets = await res.json(); 
 
-    renderPets(allPets);
-  } catch (error) {
+    renderPets(allPets); // Renderiza os pets
+  } catch (error) { //caso ocorra algum erro vai alertar.
     console.error("Erro ao carregar pets:", error);
     container.innerHTML = `<p style="color: red;">Erro ao carregar os pets.</p>`;
   }
@@ -30,11 +30,11 @@ async function carregarPets() {
 function renderPets(pets) {
   container.innerHTML = "";
 
-  pets.forEach(pet => {
+  pets.forEach(pet => { //cria uma DIV para cada pet no banco de dados.
     const card = document.createElement("div");
     card.classList.add("pet-card");
 
-    card.innerHTML = `
+    card.innerHTML = `  //Escreve o HTML 
       <img src="${pet.picture}" alt="${pet.name}" class="pet-img">
       <h3>${pet.name}</h3>
       <p>Gênero: ${pet.genre}</p>
@@ -42,19 +42,19 @@ function renderPets(pets) {
       ${!pet.isAdoptable ? `<p class="adopted">ADOTADO</p>` : ''}
       <div class="card-actions">
         <span class="icon edit-icon" title="Editar">✏️</span>
-        <button class="adotar-btn" ${!pet.isAdoptable ? "disabled" : ""}>ADOTAR</button>
+        <button class="adotar-btn" ${!pet.isAdoptable ? "disabled" : ""}>ADOTAR</button> 
         <span class="icon delete-icon" title="Excluir">🗑️</span>
       </div>
     `;
 
-    container.appendChild(card);
+    container.appendChild(card); //coloca o DIV do animal no container
 
     // Eventos
     const editIcon = card.querySelector(".edit-icon");
     editIcon.addEventListener("click", () => openEditPanel(pet));
 
     const adotarBtn = card.querySelector(".adotar-btn");
-    adotarBtn.addEventListener("click", async () => {
+    adotarBtn.addEventListener("click", async () => { //faz com que quando aperte o botão "adotar" apareca um texto em verde.
       try {
         const res = await fetch(`http://localhost:3000/api/pets/${pet.id}`, {
           method: "PUT",
@@ -72,7 +72,7 @@ function renderPets(pets) {
       }
     });
 
-    const deleteIcon = card.querySelector(".delete-icon");
+    const deleteIcon = card.querySelector(".delete-icon"); //quando clicar no icone de deletar, ele vai deletar o pet.
     deleteIcon.addEventListener("click", () => deletarPet(pet.id, card));
   });
 }
@@ -91,9 +91,11 @@ function openEditPanel(pet) {
 }
 
 // evento submit para atualizar pet
-editForm.addEventListener("submit", async (e) => {
+editForm.addEventListener("submit", async (e) => { //evento para editar o pet.
   e.preventDefault();
 
+
+  //pega os elementos de edição no DOM
   const id = document.getElementById("editPetId").value;
   const updatedPet = {
     name: document.getElementById("editName").value,
@@ -104,14 +106,14 @@ editForm.addEventListener("submit", async (e) => {
     picture: document.getElementById("editPicture").value,
   };
 
-  try {
+  try {//Conecta com o rout do pet na funçao de editar e envia as informações necessarias.
     const res = await fetch(`http://localhost:3000/api/pets/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedPet),
     });
 
-    if (!res.ok) throw new Error("Erro ao atualizar pet");
+    if (!res.ok) throw new Error("Erro ao atualizar pet"); 
 
     alert("Pet atualizado com sucesso!");
     editPanel.style.display = "none";
@@ -147,7 +149,7 @@ async function deletarPet(id, cardElement) {
   }
 }
 
-// evento click no botão buscar
+// evento no botão buscar
 btnSearch.addEventListener("click", () => {
   const query = searchInput.value.trim().toLowerCase();
 
