@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/buscarAnimais.css" />
+  </head>
+  <body>
+    <header>
+      <a href="#">
+        <img src="./imgs/logo1.png" alt="shelterLogo" id="logo1" />
+      </a>
+      <div id="buttons"></div>
+    </header>
+    <main id="main2">
+      <div id="formCadastroAnimal">
+        <form action="registerAnimal" id="formAnimal">
+          <label for="name">Nome do animal:</label>
+          <input type="text" name="name" id="nameAnimal" required />
+
+          <label for="specie">Especie: </label>
+          <input type="text" name="specie" id="specieAnimal" required />
+          <div style="margin-top: 2vh">
+            <label for="age">Idade: </label>
+            <input
+              type="number"
+              name="age"
+              id="ageAnimal"
+              placeholder="3"
+              style="width: 5vh"
+              required
+            />
+            <label for="genre">Gênero: </label>
+            <select name="genre" id="genreAnimal" required>
+              <option value="">Selecione</option>
+              <option value="femea">Fêmea</option>
+              <option value="macho">Macho</option>
+              <option value="nao binario">Não binário</option>
+            </select>
+          </div>
+          <label for="picture" style="margin-top: 4vh"
+            >insira o link da foto</label
+          >
+          <input type="text" name="picture" id="pictureAnimal" required />
+          <button type="submit" id="registerAnimal1">Cadastrar</button>
+        </form>
+      </div>
+    </main>
+    <script src="./js/cadastroBicho.js"></script>
+  </body>
+</html>
