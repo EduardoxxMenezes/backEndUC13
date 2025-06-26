@@ -28,13 +28,13 @@ export class UserRepository{
 
     async updateUser(id: number,  fields: Partial<User>){
 
-        const user = this.findUserById(id)
-        
-        if (user instanceof User) {
-            user.setPreviousPassword(user.Password)
-            Object.assign(user, fields);
-            return await this.UserRep.save(user);
+        const user = await this.findUserById(id);
+        if (user) {
+          user.setPreviousPassword(user.password);
+          Object.assign(user, fields);
+          return await this.UserRep.save(user);
         }
+        return null;
     }
 
     async deleteUser(id: number){

@@ -7,7 +7,7 @@ const repo = new UserRepository();
 export class UserController {
   async register(req: Request, res: Response) {
     try {
-      const { name, email, password, userType } = req.body;
+      const { name, email, password } = req.body;
 
       const existing = await repo.findUserByEmail(email);
 
@@ -16,9 +16,9 @@ export class UserController {
         return;
       }
 
-      const user = await repo.createUser(name, email, password, userType);
+      const user = await repo.createUser(name, email, password, "cliente");
       if (!user) {
-        res.status(500).json({ message: "Ops! Algo de errado não tá certo!" })
+        res.status(500).json({ message: "Ops! Algo não tá certo!" })
         return
       }
       res.status(201).json(user);
@@ -33,14 +33,17 @@ export class UserController {
   async login(req: Request, res: Response) {
     try {
       const { email, password } = req.body;
-
+      
       const user = await repo.findUserByEmail(email);
       if (!user) {
         res.status(404).json({ message: "Usuário não encontrado." });
         return;
       }
+      console.log("Usuário encontrado:", user);
+  console.log("Senha enviada:", password);
+  console.log("Hash no banco:", user.password);
 
-      const isValid = await bcrypt.compare(password, user.Password);
+      const isValid = await bcrypt.compare(password, user.password);
       if (!isValid) {
         res.status(401).json({ message: "Senha inválida." });
         return;
