@@ -8,14 +8,14 @@ import PetRoutes from "./routes/PetRoutes"
 
 const app: Application = express();
 
-// CORS antes das rotas
-app.use(
+
+app.use( //vai encontrar o link dos negocios, já que os links são diferentes do front e do back, o cors garante que não ocorra nenhum erro.
   cors({
     origin: ['http://localhost:3000', 'http://127.0.0.1:5500'],
   })
 );
 
-app.use(express.json());
+app.use(express.json());  //permite ao seu servidor analisar solicitações recebidas (informações enviadas pelo usuário)
 app.use(express.urlencoded({ extended: true }));
 
 // Rotas da API
