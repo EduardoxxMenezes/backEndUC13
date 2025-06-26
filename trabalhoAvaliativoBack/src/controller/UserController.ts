@@ -2,10 +2,10 @@ import { Request, Response } from "express";
 import { UserRepository } from "../repository/UserRepositories";
 import bcrypt from "bcryptjs";
 
-const repo = new UserRepository();
+const repo = new UserRepository(); //chama o repositório do usuário
 
-export class UserController {
-  async register(req: Request, res: Response) {
+export class UserController { //cria uma classe para o controller
+  async register(req: Request, res: Response) { //função para registrar usuario
     try {
       const { name, email, password } = req.body;
 
@@ -30,7 +30,7 @@ export class UserController {
     }
   }
 
-  async login(req: Request, res: Response) {
+  async login(req: Request, res: Response) { //função para logar usuário.
     try {
       const { email, password } = req.body;
       
@@ -55,7 +55,7 @@ export class UserController {
     }
   }
 
-  async getAll(req: Request, res: Response) {
+  async getAll(req: Request, res: Response) { //função para encontrar todos os usuarios.
     try {
       const users = await repo.findAllUsers();
       res.json(users);
@@ -66,7 +66,7 @@ export class UserController {
     }
   }
 
-  async getById(req: Request, res: Response) {
+  async getById(req: Request, res: Response) { //selecionar um usuario pelo ID.
     try {
       const id = parseInt(req.params.id);
       const user = await repo.findUserById(id);
@@ -84,7 +84,7 @@ export class UserController {
     }
   }
 
-  async update(req: Request, res: Response) {
+  async update(req: Request, res: Response) { //atualizar o usuario. 
     try {
       const id = parseInt(req.params.id);
       const { name, email, password } = req.body;
@@ -106,7 +106,7 @@ export class UserController {
     }
   }
 
-  async delete(req: Request, res: Response) {
+  async delete(req: Request, res: Response) { //Função para deletar usuario.
     try {
       const id = parseInt(req.params.id);
       const deleted = await repo.deleteUser(id);
