@@ -14,21 +14,21 @@ console.log(name, email, password)
     return;
   }
 
-  try {
+  try { //conecta com o rout de usuarios e ativa a função de cadastrar.
     const res = await fetch("http://localhost:3000/api/usuarios", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password, userType: "user" }), // userType fixo por exemplo
+      body: JSON.stringify({ name, email, password, userType: "user" }), // Eu ia fazer um negocio onde só administradores podem  criar e deletar os pets mas nao deu tempo
     });
 
     if (res.ok) {
       alert("Cadastro realizado com sucesso!");
-      window.location.href = "../index.html"; // ou outra página válida
+      window.location.href = "../index.html"; // leva para pagina de login
     } else {
       const data = await res.json();
       alert(data.message || "Erro ao cadastrar");
     }
-  }catch (error) {
+  }catch (error) { //caso encontre algum erro.
     console.error("Erro ao registrar usuário:", error);
     alert("Erro ao registrar usuário.");
   }
