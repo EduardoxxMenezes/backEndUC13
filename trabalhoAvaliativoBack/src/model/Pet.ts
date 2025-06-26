@@ -2,8 +2,8 @@ import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } fr
 import bcrypt from 'bcryptjs';
 
 
-@Entity('Pets')
-export class Pets{
+@Entity('Pets') //cria a entidade pets no banco de dados
+export class Pets{ //cria cada coluna com suas especificações (esqueci o nome do negocinho)
     @PrimaryGeneratedColumn()
     id!: number;
 
@@ -25,7 +25,7 @@ export class Pets{
     @Column({type: 'varchar', length: 500, nullable: false})
     picture: string;
     
-    constructor(name: string, specie: string, genre: string, isAdoptable: boolean, age: number, picture: string){
+    constructor(name: string, specie: string, genre: string, isAdoptable: boolean, age: number, picture: string){ //constructor
         this.name = name;
         this.specie = specie;
         this.genre = genre;
