@@ -23,7 +23,7 @@ export class petRepository{
         return await this.petRep.findOneBy({specie: specie});
     }
     async updatePet(id: number, fields: Partial<Pets>) {
-  const pet = await this.findPetById(id); // CORRETO: aguarda o resultado
+  const pet = await this.findPetById(id);
   if (!pet) return null;
 
   Object.assign(pet, fields);
