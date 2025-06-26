@@ -6,13 +6,13 @@ import bcrypt from "bcryptjs";
 
 const petRep = new petRepository();
 
-export class petController{
+export class petController{ //cria uma nova classe pet controller para organizar a situação
 
-    async addPet(req: Request, res: Response){
+    async addPet(req: Request, res: Response){ //função de adicionar o pet.
         try{
-        const {name, specie, genre, age, picture} = req.body;
-        const pet = await petRep.addPet(name, specie, genre, true, age, picture);
-        if(!pet){
+        const {name, specie, genre, age, picture} = req.body; // puxa as informações.
+        const pet = await petRep.addPet(name, specie, genre, true, age, picture); //cria o pet 
+        if(!pet){ //se o pet nao tiver criado ele envia erro.
             res.status(500).json({ message: "Ocorreu um erro inesperado ao tentar registrar o animal." })
              return;
          }
@@ -25,7 +25,7 @@ export class petController{
             }
     }
     
-  async getAll(req: Request, res: Response) {
+  async getAll(req: Request, res: Response) { //pega todos os pets do banco de dados.
     try {
       const pets = await petRep.findAllPets();
       res.json(pets);
@@ -37,7 +37,7 @@ export class petController{
   }
 
   
-  async getById(req: Request, res: Response) {
+  async getById(req: Request, res: Response) { //encontra o pet através do ID.
     try {
       const id = parseInt(req.params.id);
       const pet = await petRep.findPetById(id);
@@ -56,10 +56,10 @@ export class petController{
   }
 
   
- async update(req: Request, res: Response) {
+ async update(req: Request, res: Response) { //atualiza os pets
   try {
     const id = parseInt(req.params.id);
-    const fieldsToUpdate: Partial<Pets> = req.body; // pega só o que vier no body
+    const fieldsToUpdate: Partial<Pets> = req.body;
 
     const updated = await petRep.updatePet(id, fieldsToUpdate);
 
